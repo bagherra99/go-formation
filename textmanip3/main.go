@@ -55,7 +55,7 @@ func TraitementDeText(filename string) string {
 
 	var upperCount, lowerCount, capCount int
 
-	for i := 1; i < len(words); i++ {
+	for i := 0; i < len(words); i++ {
 		switch {
 		case strings.HasPrefix(words[i], "(up,"):
 			m := words[i+1]
@@ -157,10 +157,17 @@ func TraitementDeText(filename string) string {
 			capCount = 1
 		case strings.Contains(words[i], "(cap)"):
 			words[i] = Capitalize(words[i])
-		case words[i] == "a" && i < len(words)-1:
-			nextWord := words[i+1]
-			if isVowel(nextWord[0]) {
-				words[i] = "an"
+		case (words[i] == "a" || words[i] == "A") && i < len(words)-1:
+			if !(words[i+1] == "(up)" || words[i+1] == "(low)" || words[i+1] == "(cap)") {
+				nextWord := words[i+1]
+				if isVowel(nextWord[0]) {
+					words[i] = words[i] + "n"
+				}
+			}else{
+				nextWord := words[i+2]
+				if isVowel(nextWord[0]) {
+					words[i] = words[i] + "n"
+				}
 			}
 		case words[i] == "(hex)":
 			decimal, err := strconv.ParseInt(words[i-1], 16, 64)
