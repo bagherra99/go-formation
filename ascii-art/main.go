@@ -45,7 +45,6 @@ func main() {
 		arr = []rune{}
 	}
 	fmt.Println()
-	fmt.Println(splitText(Arg))
 }
 
 // Printing given rune array, based on lines art
