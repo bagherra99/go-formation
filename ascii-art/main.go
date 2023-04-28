@@ -39,6 +39,7 @@ func main() {
 		}
 		if mot[i] == "" {
 			fmt.Println()
+			continue
 		}else{
 			printArt(arr, lines)
 		}
