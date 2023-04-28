@@ -9,13 +9,17 @@ import (
 
 func main() {
 	//Fetching the argument, and checking for validity
-	Arg := strings.Join(os.Args[2:], " ")
-	// if len(Arg) < 3 {
-	// 	return
-	// }
-	for _, r := range Arg {
-		if r < 32 || r > 126 {
-			return
+	Arg := os.Args[1]
+	mot := splitText(Arg)
+	if len(Arg) < 2 {
+		return
+	}
+	for i := 0; i < len(mot); i++ {
+		for _, r := range mot[i] {
+			if r < 32 || r > 126 {
+				fmt.Println("rhooo meecc")
+				return
+			}
 		}
 	}
 
@@ -29,33 +33,33 @@ func main() {
 
 	//Creating the art itself
 	var arr []rune
-	Newline := false
-	for i, r := range Arg {
-		if Newline {
-			Newline = false
+	for i := 0; i < len(mot); i++ {
+		for _, r := range mot[i] {
+			arr = append(arr, r)
+		}
+		if mot[i] == "" {
+			fmt.Println()
+		}else{
 			printArt(arr, lines)
-			arr = []rune{}
-			continue
 		}
-
-		if r == 92 && len(Arg) != i+1 {
-			if Arg[i+1] == 110 {
-				Newline = true
-				continue
-			}
-		}
-		arr = append(arr, r)
+		arr = []rune{}
 	}
-	printArt(arr, lines)
+	fmt.Println()
+	fmt.Println(splitText(Arg))
 }
 
 // Printing given rune array, based on lines art
 func printArt(arr []rune, lines []string) {
-	for line := 0; line <= 8; line++ {
+	for line := 0; line < 8; line++ {
 		for _, r := range arr {
 			skip := (r - 32) * 9
 			fmt.Print(lines[line+int(skip)])
 		}
 		fmt.Println()
 	}
+}
+
+func splitText(text string) []string {
+	return strings.Split(text, "\\n")
+
 }
