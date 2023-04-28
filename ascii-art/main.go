@@ -44,7 +44,6 @@ func main() {
 		}
 		arr = []rune{}
 	}
-	fmt.Println()
 }
 
 // Printing given rune array, based on lines art
