@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<title>ASCII Art</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+		/* Styles pour la palette de couleurs */
+
+		/* Couleurs principales */
+		:root {
+			--primary-color: #7615ED;
+			--secondary-color: #2c3e50;
+			--background-color: #f3f3f3;
+            /* --background-image: url("/images/pexels-pixabay-60702.jpg"); */
+			/* --primary-color: #6bdfbc;
+			--secondary-color: #ff221b;
+			--background-color: #000000; */
+		}
+
+		/* Styles généraux */
+		body {
+			font-family: Arial, sans-serif;
+			color: var(--secondary-color);
+			background-color: var(--background-color);
+            /* background-image: url("/images/pexels-pixabay-60702.jpg"); */
+			margin: 0;
+			padding: 20px;
+		}
+
+		h1, h2 {
+			/* color: var(--primary-color); */
+			background: linear-gradient(45deg, #7615ED 20%, #FD7701 95%);
+			background-clip: text;
+			-webkit-background-clip: text;
+			color: transparent;
+			text-align: center;
+		}
+
+		/* Styles pour le bouton du mode sombre */
+		.dark-mode-button {
+			position: fixed;
+			top: 20px;
+			left: 20px;
+			padding: 10px;
+			border: none;
+			border-radius: 50%;
+			background-color: var(--primary-color);
+			color: white;
+			cursor: pointer;
+			z-index: 9999;
+		}
+
+		.dark-mode-button:hover {
+			transform: scale(1.1);
+		}
+
+		/* Styles pour le formulaire */
+		.form {
+			margin-bottom: 20px;
+		}
+
+		.inputs {
+			display: flex;
+			flex-direction: column;
+			margin-bottom: 10px;
+			/* align-items: center;
+			justify-content: center; */
+			/* width: 90%; */
+		}
+
+		.input1, .input2 {
+			margin-bottom: 10px;
+			text-align: center;
+			/* width: 90%; */
+		}
+
+		/* .input2{
+			text-align: center;
+		} */
+
+		label {
+			display: block;
+			margin-bottom: 5px;
+		}
+
+		textarea {
+			width: 90%;
+			height: 15vh;
+			padding: 10px;
+			box-shadow: 2px 2px 30px  #dadada;
+			border: 1px solid var(--primary-color);
+			/* border: none; */
+			border-radius: 4px;
+			background-color: white;
+			color: var(--secondary-color);
+		}
+
+		select{
+			width: 30%;
+			padding: 10px;
+			border: 1px solid var(--primary-color);
+			box-shadow: 2px 2px 40px  #cacaca;
+			/* border: none; */
+			border-radius: 4px;
+			background-color: white;
+			color: var(--secondary-color);
+		}
+
+		.button {
+			/* text-align: right; */
+			/* margin-top: 10px; */
+		}
+
+		button {
+			padding: 15px 25px;
+			border: none;
+			font-size: 0.9rem;
+			font-weight: bolder;
+			margin-top: 10px;
+			border-radius: 4px;
+			/* background-color: var(--primary-color); */
+			background: linear-gradient(135deg, #7615ED 20%, #FD7701 95%);
+			color: white;
+			cursor: pointer;
+		}
+
+		a{
+			text-decoration: none;
+			color: white;
+		}		
+
+		/* Styles pour les résultats */
+		.result {
+			margin-bottom: 50px;
+		}
+
+		pre {
+			/* white-space: pre-wrap; */
+			overflow: auto;
+			height: 250px;
+			font-size: 16px;
+			padding: 10px;
+			box-shadow: 2px 2px 30px  #dadada;
+			font-weight: bold;
+			border: 1px solid var(--primary-color);
+			border-radius: 4px;
+			background-color: white;
+			color: var(--secondary-color);
+			margin-top: 60px;
+		}
+
+		/* Styles pour le mode sombre */
+		.dark-mode {
+			--primary-color: #d4dae0;
+			--secondary-color: #f8f8f8;
+			--background-color: #14052c;
+			/* --primary-color: #f35454;
+			--secondary-color: #2c3e50;
+			--background-color: #a05858; */			
+		}
+
+		.dark-mode textarea, .dark-mode select, .dark-mode pre{
+			background-color: #3d2c44;
+			box-shadow: none;
+			border: 1px solid #7615ED;
+		}
+
+		.dark-mode h1, .dark-mode h2{
+			background: linear-gradient(45deg, #7615ED , #FD7701 75%);
+			background-clip: text;
+			-webkit-background-clip: text;
+			color: transparent;
+			text-align: center;
+		}
+
+		/* Responsive */
+		@media screen and (min-width: 768px) {
+			.inputs {
+				flex-direction: row;
+				align-items: center;
+			}
+
+			.input1, .input2 {
+				margin-right: 10px;
+				margin-bottom: 0;
+				flex: 1;
+				text-align: justify;
+			}
+			.input1{
+				flex: 2;
+			}
+
+			textarea, select {
+				width: 100%;
+			}
+			textarea{
+				height: fit-content;
+			}
+
+			.button {
+				margin-top: 30px;
+				text-align: center;
+			}
+		}
+	</style>
+</head>
+<body>
+	<button class="dark-mode-button" onclick="toggleDarkMode()">&#9790;</button>
+	<h1>ASCII Art Generator</h1>
+	<form class="form" action="/ascii-art" method="POST">
+		<div class="inputs">
+			<div class="input1">
+				<label for="text">Text:</label>
+				<textarea id="text" name="text" required></textarea>
+			</div>
+			<!-- <br> -->
+			<div class="input2">
+				<label for="banner">Banner:</label>
+				<select id="banner" name="banner">
+					<option value="" disabled selected hidden>Choose an option</option>
+					<option value="shadow">Shadow</option>
+					<option value="standard">Standard</option>
+					<option value="thinkertoy">Thinkertoy</option>
+				</select>
+			</div>
+		</div>
+		<div class="button">
+			<button type="submit">Generate ASCII Art</button>
+		</div>
+	</form>
+	<h2>Results:</h2>
+	{{range .Results}}
+		<div class="result">
+			<pre>{{.}}</pre>
+		</div>
+	{{end}}
+	<div class="button">
+		<button>
+			<a href="/download?filename={{.Filename}}">Télécharger le fichier</a>
+		</button>
+	</div>
+
+	<script>
+		function toggleDarkMode() {
+			document.body.classList.toggle("dark-mode");
+			document.body.classList.toggle("dark-mode1");
+		}
+	</script>
+</body>
+</html>
