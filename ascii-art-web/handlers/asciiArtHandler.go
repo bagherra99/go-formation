@@ -4,18 +4,14 @@ import (
 	"AsciiArtWeb/src"
 	"AsciiArtWeb/src/utils"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"strings"
-
-	"github.com/google/uuid"
 )
 
 type FormData struct {
-	Text     string
-	Banner   string
-	Results  []string
-	Filename string
+	Text    string
+	Banner  string
+	Results []string
 }
 
 func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
@@ -26,14 +22,6 @@ func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
 		Title:   "Erreur 400 - Requête incorrecte",
 		Message: "Mauvaise requête ou Caractères non-ASCII détectés",
 	}
-
-	// Ajouter le nom du fichier dans la structure de données du formulaire
-	// formData := FormData{
-	// 	Text:     text,
-	// 	Banner:   banner,
-	// 	Results:  []string{result},
-	// 	Filename: filename,
-	// }
 
 	if r.Method != http.MethodPost {
 		w.WriteHeader(http.StatusMethodNotAllowed)
@@ -76,20 +64,10 @@ func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
 		result = src.CreatingArt(text, banner)
 	}
 
-	// Enregistrer l'ASCII art dans un fichier
-	filename := fmt.Sprintf("%s.txt", uuid.New().String())
-	filePath := fmt.Sprintf("ascii-art-files/%s", filename)
-	err1 := ioutil.WriteFile(filePath, []byte(result), 0644)
-	if err1 != nil {
-		http.Error(w, err1.Error(), http.StatusInternalServerError)
-		return
-	}
-
 	formData := FormData{
-		Text:     text,
-		Banner:   banner,
-		Results:  []string{result},
-		Filename: filename,
+		Text:    text,
+		Banner:  banner,
+		Results: []string{result},
 	}
 	RenderTemplate(w, templates.Index, formData)
 }

@@ -83,7 +83,7 @@
 			margin-bottom: 5px;
 		}
 
-		textarea {
+		input {
 			width: 90%;
 			height: 15vh;
 			padding: 10px;
@@ -107,7 +107,7 @@
 		}
 
 		.button {
-			/* text-align: right; */
+			text-align: center;
 			/* margin-top: 10px; */
 		}
 
@@ -124,14 +124,9 @@
 			cursor: pointer;
 		}
 
-		a{
-			text-decoration: none;
-			color: white;
-		}		
-
 		/* Styles pour les résultats */
 		.result {
-			margin-bottom: 50px;
+			margin-bottom: 20px;
 		}
 
 		pre {
@@ -146,7 +141,6 @@
 			border-radius: 4px;
 			background-color: white;
 			color: var(--secondary-color);
-			margin-top: 60px;
 		}
 
 		/* Styles pour le mode sombre */
@@ -159,7 +153,7 @@
 			--background-color: #a05858; */			
 		}
 
-		.dark-mode textarea, .dark-mode select, .dark-mode pre{
+		.dark-mode input, .dark-mode select, .dark-mode pre{
 			background-color: #3d2c44;
 			box-shadow: none;
 			border: 1px solid #7615ED;
@@ -190,11 +184,11 @@
 				flex: 2;
 			}
 
-			textarea, select {
+			input, select {
 				width: 100%;
 			}
-			textarea{
-				height: fit-content;
+			input{
+				height: 30px;
 			}
 
 			.button {
@@ -211,7 +205,7 @@
 		<div class="inputs">
 			<div class="input1">
 				<label for="text">Text:</label>
-				<textarea id="text" name="text" required></textarea>
+				<input type="text" id="text" name="text" value="{{.Text}}" required>
 			</div>
 			<!-- <br> -->
 			<div class="input2">
@@ -234,11 +228,7 @@
 			<pre>{{.}}</pre>
 		</div>
 	{{end}}
-	<div class="button">
-		<button>
-			<a href="/download?filename={{.Filename}}">Télécharger le fichier</a>
-		</button>
-	</div>
+
 
 	<script>
 		function toggleDarkMode() {
